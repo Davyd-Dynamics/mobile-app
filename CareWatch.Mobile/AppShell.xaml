@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="CareWatch.Mobile.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:CareWatch.Mobile"
+    xmlns:views="clr-namespace:CareWatch.Mobile.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Title="CareWatch.Mobile">
+
+    <ShellContent
+        Title="Patients"
+        ContentTemplate="{DataTemplate views:PatientsPage}"
+        Route="PatientsPage" />
+
+    <ShellContent
+    Title="Patient Details"
+    ContentTemplate="{DataTemplate views:PatientDetailsPage}"
+    Route="PatientDetailsPage" />
+
+    <ShellContent
+ Title="Edit Patient"
+ ContentTemplate="{DataTemplate views:EditPatientPage}"
+ Route="EditPatientPage" />
+</Shell>
