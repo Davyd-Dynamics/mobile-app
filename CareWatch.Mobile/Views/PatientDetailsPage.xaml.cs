@@ -18,7 +18,8 @@ public partial class PatientDetailsPage : ContentPage
         {
             if (Guid.TryParse(value, out Guid patientGuid))
             {
-                _patient = PatientRepository.GetPatientById(patientGuid);
+                var apiRepository = new PatientApiRepository();
+                _patient = apiRepository.GetPatientByIdAsync(patientGuid).Result;
                 BindingContext = _patient;
             }
         }

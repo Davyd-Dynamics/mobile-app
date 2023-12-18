@@ -1,5 +1,7 @@
 using CareWatch.Mobile.Models;
 using System.Collections.ObjectModel;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Diagnostics;
 
 namespace CareWatch.Mobile.Views
 {
@@ -47,8 +49,24 @@ namespace CareWatch.Mobile.Views
         {
             var menuItem = sender as MenuItem;
             var patient = menuItem.BindingContext as Patient;
-            PatientRepository.DeletePatient(patient.Id);
-            await LoadPatients();
+
+            bool userConfirmation = await DisplayAlert("Confirm Deletion", $"Are you sure you want to delete {patient.Contact.FirstName} {patient.Contact.LastName}?", "Yes", "No");
+
+            if (userConfirmation)
+            {
+                var apiRepository = Application.Current.Handler.MauiContext.Services.GetService<PatientApiRepository>();
+                try
+                {
+                    await apiRepository.DeletePatientAsync(patient.Id);
+                    await LoadPatients();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error: {ex.Message}");
+                    throw;
+                }
+                
+            }
         }
 
         //private void searchBar_SearchButtonPressed(object sender, EventArgs e)
@@ -59,9 +77,14 @@ namespace CareWatch.Mobile.Views
 
         private async Task LoadPatients()
         {
-            PatientApiRepository patientApiRepository = new PatientApiRepository();
-            var patients = await patientApiRepository.GetAllPatientsAsync();
+            var apiRepository = Application.Current.Handler.MauiContext.Services.GetService<PatientApiRepository>();
+            var patients = await apiRepository.GetAllPatientsAsync();
             patientsList.ItemsSource = new ObservableCollection<Patient>(patients);
+        }
+
+        private async void AddPatientButton_Clicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(AddPatientPage));
         }
     }
 }

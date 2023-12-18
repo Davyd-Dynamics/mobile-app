@@ -16,5 +16,6 @@ namespace CareWatch.Mobile.Models.Requests
         public string Address { get; set; }
         public string Phone { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public int Gender { get; set; }
     }
 }

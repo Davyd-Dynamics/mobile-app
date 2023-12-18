@@ -11,6 +11,7 @@ namespace CareWatch.Mobile
             Routing.RegisterRoute(nameof(PatientsPage), typeof(PatientsPage));
             Routing.RegisterRoute(nameof(PatientDetailsPage), typeof(PatientDetailsPage));
             Routing.RegisterRoute(nameof(EditPatientPage), typeof(EditPatientPage));
+            Routing.RegisterRoute(nameof(AddPatientPage), typeof(AddPatientPage));
         }
     }
 }

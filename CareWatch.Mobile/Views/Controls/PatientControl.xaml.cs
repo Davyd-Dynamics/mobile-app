@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace CareWatch.Mobile.Views.Controls
 {
     public partial class PatientControl : ContentView
@@ -19,6 +21,12 @@ namespace CareWatch.Mobile.Views.Controls
             set => entryLastName.Text = value;
         }
 
+        public string MiddleName
+        {
+            get => entryMiddleName.Text;
+            set => entryMiddleName.Text = value;
+        }
+
         public string Phone
         {
             get => entryPhoneNumber.Text;
@@ -31,10 +39,38 @@ namespace CareWatch.Mobile.Views.Controls
             set => entryEmail.Text = value;
         }
 
+        public string Address
+        {
+            get => entryAddress.Text;
+            set => entryAddress.Text = value;
+        }
+
+        public DateTime DateOfBirth
+        {
+            get => datePickerDateOfBirth.Date;
+            set => datePickerDateOfBirth.Date = value;
+        }
+
+        public string Gender
+        {
+            get => pickerGender.SelectedItem?.ToString();
+            set => pickerGender.SelectedItem = value;
+        }
+
         public event EventHandler SaveButtonClicked;
 
+        public event EventHandler<string> OnError;
         private void btnSave_Clicked(object sender, EventArgs e)
         {
+            if(emailValidator.IsNotValid)
+            {
+                foreach (var error in emailValidator.Errors)
+                {
+                    OnError?.Invoke(this, error.ToString());
+                }
+                return;
+            }
+
             SaveButtonClicked?.Invoke(this, EventArgs.Empty);
         }
 

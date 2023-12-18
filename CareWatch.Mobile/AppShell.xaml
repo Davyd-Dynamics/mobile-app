@@ -19,7 +19,12 @@
     Route="PatientDetailsPage" />
 
     <ShellContent
- Title="Edit Patient"
- ContentTemplate="{DataTemplate views:EditPatientPage}"
- Route="EditPatientPage" />
+    Title="Edit Patient"
+    ContentTemplate="{DataTemplate views:EditPatientPage}"
+    Route="EditPatientPage" />
+
+    <ShellContent
+Title="Add Patient"
+ContentTemplate="{DataTemplate views:AddPatientPage}"
+Route="AddPatientPage" />
 </Shell>

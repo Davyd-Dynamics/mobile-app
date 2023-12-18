@@ -1,5 +1,6 @@
 ﻿using CareWatch.Mobile.Models;
 using Microsoft.Extensions.Logging;
+using CommunityToolkit.Maui;
 
 namespace CareWatch.Mobile
 {
@@ -8,20 +9,16 @@ namespace CareWatch.Mobile
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
-            builder
-                .UseMauiApp<App>()
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
+            builder.UseMauiApp<App>().ConfigureFonts(fonts =>
+            {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+            }).UseMauiCommunityToolkit();
 
             builder.Services.AddSingleton<PatientApiRepository>();
-
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
-
             return builder.Build();
         }
     }
