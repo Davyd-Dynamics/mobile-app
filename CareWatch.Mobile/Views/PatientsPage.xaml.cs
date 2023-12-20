@@ -1,7 +1,8 @@
-using CareWatch.Mobile.Models;
 using System.Collections.ObjectModel;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Diagnostics;
+using CareWatch.Mobile.Models.Entities;
+using CareWatch.Mobile.Models.Services;
 
 namespace CareWatch.Mobile.Views
 {

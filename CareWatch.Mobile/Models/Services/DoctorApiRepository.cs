@@ -1,21 +1,26 @@
-﻿using CareWatch.Mobile.Models.Requests;
+﻿using CareWatch.Mobile.Models.Entities;
+using CareWatch.Mobile.Models.Requests;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 
-namespace CareWatch.Mobile.Models
+namespace CareWatch.Mobile.Models.Services
 {
-    public class PatientApiRepository
+    public class DoctorApiRepository
     {
-        private static List<Patient> patients;
+        private static List<Doctor> doctors; // Assuming Doctor model exists
         private readonly string baseApiUrl = "http://10.0.2.2:5000";
         private readonly HttpClient httpClient;
-        JsonSerializerOptions _serializerOptions;
+        private readonly JsonSerializerOptions _serializerOptions;
 
-        public PatientApiRepository()
+        public DoctorApiRepository()
         {
             httpClient = new HttpClient();
             _serializerOptions = new JsonSerializerOptions
@@ -26,71 +31,59 @@ namespace CareWatch.Mobile.Models
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<IEnumerable<Patient>> GetAllPatientsAsync(SearchFIlter searchFilter = null)
+        // Similar methods for Doctor CRUD operations
+        // You can implement methods like GetAllDoctorsAsync, GetDoctorByIdAsync, UpdateDoctorAsync, CreateDoctorAsync, and DeleteDoctorAsync
+
+        // Example:
+        public async Task<IEnumerable<Doctor>> GetAllDoctorsAsync()
         {
             try
             {
-                string apiUrl = $"{baseApiUrl}/api/v1/patients/";
-
-                if (searchFilter != null)
-                {
-                    // Serialize the search filter and append it to the URL
-                    var queryString = string.Join("&", searchFilter.GetType()
-                        .GetProperties()
-                        .Where(prop => prop.GetValue(searchFilter) != null)
-                        .Select(prop => $"{prop.Name}={Uri.EscapeDataString(prop.GetValue(searchFilter).ToString())}"));
-
-                    apiUrl += $"?{queryString}";
-                }
-
-                var uri = new Uri($"{baseApiUrl}/api/v1/patients");
+                var uri = new Uri($"{baseApiUrl}/api/v1/doctors");
                 var response = await httpClient.GetAsync(uri);
                 response.EnsureSuccessStatusCode();
 
                 var content = await response.Content.ReadAsStringAsync();
-                patients = JsonConvert.DeserializeObject<List<Patient>>(content);
-                return patients;
+                doctors = JsonConvert.DeserializeObject<List<Doctor>>(content);
+                return doctors;
             }
             catch (Exception ex)
             {
-                // Handle the error
                 Console.WriteLine($"Error: {ex.Message}");
                 return null;
             }
         }
 
-        public async Task<Patient> GetPatientByIdAsync(Guid patientId)
-        {
-            //try
-            //{
-            //    var response = await httpClient.GetAsync($"{baseApiUrl}/api/v1/patients/{patientId}");
-            //    response.EnsureSuccessStatusCode();
-            //    var content = await response.Content.ReadAsStringAsync();
-            //    return JsonConvert.DeserializeObject<Patient>(content);
-            //}
-            //catch (Exception ex)
-            //{
-            //    // Обробити помилку
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //    return null;
-            //}
-            return patients.FirstOrDefault(p => p.Id == patientId);
-        }
-
-        public async Task<Patient> UpdatePatientAsync(Guid patientId, PatientRequest updatePatientRequestCommand)
+        public async Task<Doctor> GetDoctorByIdAsync(Guid doctorId)
         {
             try
             {
-                var json = System.Text.Json.JsonSerializer.Serialize(updatePatientRequestCommand, _serializerOptions);
+                var response = await httpClient.GetAsync($"{baseApiUrl}/api/v1/doctors/{doctorId}");
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<Doctor>(content);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<Doctor> UpdateDoctorAsync(Guid doctorId, DoctorRequest updateDoctorRequestCommand)
+        {
+            try
+            {
+                var json = System.Text.Json.JsonSerializer.Serialize(updateDoctorRequestCommand, _serializerOptions);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var uri = new Uri($"{baseApiUrl}/api/v1/patients/{patientId}");
+                var uri = new Uri($"{baseApiUrl}/api/v1/doctors/{doctorId}");
                 var response = await httpClient.PutAsync(uri, content);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var updatedPatientContent = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<Patient>(updatedPatientContent);
+                    var updatedDoctorContent = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Doctor>(updatedDoctorContent);
                 }
                 else if (response.StatusCode == HttpStatusCode.BadRequest)
                 {
@@ -121,18 +114,18 @@ namespace CareWatch.Mobile.Models
             }
         }
 
-        public async Task<Patient> CreatePatientAsync(PatientRequest createPatientCommand)
+        public async Task<Doctor> CreateDoctorAsync(DoctorRequest createDoctorCommand)
         {
             try
             {
-                var json = System.Text.Json.JsonSerializer.Serialize(createPatientCommand, _serializerOptions);
+                var json = System.Text.Json.JsonSerializer.Serialize(createDoctorCommand, _serializerOptions);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await httpClient.PostAsync($"{baseApiUrl}/api/v1/patients", content);
+                var response = await httpClient.PostAsync($"{baseApiUrl}/api/v1/doctors", content);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var createdPatientContent = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<Patient>(createdPatientContent);
+                    var createdDoctorContent = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Doctor>(createdDoctorContent);
                 }
                 else if (response.StatusCode == HttpStatusCode.BadRequest)
                 {
@@ -163,16 +156,16 @@ namespace CareWatch.Mobile.Models
             }
         }
 
-        public async Task DeletePatientAsync(Guid patientId)
+        public async Task DeleteDoctorAsync(Guid doctorId)
         {
             try
             {
-                var response = await httpClient.DeleteAsync($"{baseApiUrl}/api/v1/patients/{patientId}");
+                var response = await httpClient.DeleteAsync($"{baseApiUrl}/api/v1/doctors/{doctorId}");
 
                 if (response.IsSuccessStatusCode)
                 {
-                    // Return the deleted patient if the deletion is successful
-                    var deletedPatientContent = await response.Content.ReadAsStringAsync();
+                    // Return success message or perform other actions if needed
+                    var deletedDoctorContent = await response.Content.ReadAsStringAsync();
                     return;
                 }
                 else if (response.StatusCode == HttpStatusCode.BadRequest)
@@ -193,7 +186,6 @@ namespace CareWatch.Mobile.Models
                     // Handle other non-success status codes
                     Console.WriteLine($"Error: {response.StatusCode}");
                 }
-
             }
             catch (Exception ex)
             {

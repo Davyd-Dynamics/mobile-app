@@ -1,5 +1,6 @@
-using CareWatch.Mobile.Models;
+using CareWatch.Mobile.Models.Entities;
 using CareWatch.Mobile.Models.Requests;
+using CareWatch.Mobile.Models.Services;
 
 namespace CareWatch.Mobile.Views
 {

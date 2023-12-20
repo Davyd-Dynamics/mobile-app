@@ -1,4 +1,5 @@
 using CareWatch.Mobile.Models;
+using CareWatch.Mobile.Models.Entities;
 
 namespace CareWatch.Mobile.Views;
 

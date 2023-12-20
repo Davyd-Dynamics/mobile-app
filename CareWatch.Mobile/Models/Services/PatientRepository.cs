@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using CareWatch.Mobile.Models.Entities;
 
-namespace CareWatch.Mobile.Models
+namespace CareWatch.Mobile.Models.Services
 {
     public static class PatientRepository
     {
@@ -118,7 +119,7 @@ namespace CareWatch.Mobile.Models
         public static Patient GetPatientById(Guid patientId)
         {
             var patient = patients.Find(p => p.Id == patientId);
-            if(patient != null)
+            if (patient != null)
             {
                 return new Patient()
                 {

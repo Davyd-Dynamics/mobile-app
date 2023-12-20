@@ -1,6 +1,6 @@
-﻿using CareWatch.Mobile.Models;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
+using CareWatch.Mobile.Models.Services;
 
 namespace CareWatch.Mobile
 {
