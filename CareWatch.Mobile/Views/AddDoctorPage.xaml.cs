@@ -1,3 +1,8 @@
+using CareWatch.Mobile.Models.Entities;
+using CareWatch.Mobile.Models.Requests;
+using CareWatch.Mobile.Models.Services;
+using Contact = CareWatch.Mobile.Models.Entities.Contact;
+
 namespace CareWatch.Mobile.Views;
 
 public partial class AddDoctorPage : ContentPage
@@ -21,14 +26,17 @@ public partial class AddDoctorPage : ContentPage
     {
         var newDoctorRequest = new DoctorRequest
         {
-            FirstName = doctorCtrl.FirstName,
-            LastName = doctorCtrl.LastName,
-            Phone = doctorCtrl.Phone,
-            Email = doctorCtrl.Email,
-            Address = doctorCtrl.Address,
-            DateOfBirth = doctorCtrl.DateOfBirth.ToUniversalTime(),
-            MiddleName = doctorCtrl.MiddleName,
-            Gender = 0 // Set the appropriate gender value for the doctor
+           Contact = new ContactRequest
+           {
+               FirstName = doctorCtrl.FirstName,
+               LastName = doctorCtrl.LastName,
+               Phone = doctorCtrl.Phone,
+               Email = doctorCtrl.Email,
+               Address = doctorCtrl.Address,
+               DateOfBirth = doctorCtrl.DateOfBirth.ToUniversalTime(),
+               MiddleName = doctorCtrl.MiddleName,
+               Gender = 0 // Set the appropriate gender value for the doctor
+           }
         };
 
         var apiRepository = Application.Current.Handler.MauiContext.Services.GetService<DoctorApiRepository>();

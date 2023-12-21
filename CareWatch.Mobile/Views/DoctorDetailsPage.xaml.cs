@@ -1,33 +1,49 @@
 using CareWatch.Mobile.Models.Entities;
 using CareWatch.Mobile.Models.Services;
 
-namespace CareWatch.Mobile.Views;
-
-[QueryProperty(nameof(DoctorId), "Id")]
-public partial class DoctorDetailsPage : ContentPage
+namespace CareWatch.Mobile.Views
 {
-    private Doctor _doctor;
-
-    public DoctorDetailsPage()
+    [QueryProperty(nameof(DoctorId), "Id")]
+    public partial class DoctorDetailsPage : ContentPage
     {
-        InitializeComponent();
-    }
+        private Doctor _doctor;
 
-    public string DoctorId
-    {
-        set
+        public DoctorDetailsPage()
         {
-            if (Guid.TryParse(value, out Guid doctorGuid))
+            InitializeComponent();
+        }
+
+        private string _doctorId;
+        public string DoctorId
+        {
+            set
             {
-                var apiRepository = Application.Current.Handler.MauiContext.Services.GetService<DoctorApiRepository>();
-                _doctor = apiRepository.GetDoctorByIdAsync(doctorGuid).Result;
-                BindingContext = _doctor;
+                _doctorId = value;
+                LoadDoctorDetailsAsync();
             }
         }
-    }
 
-    private async void BackButton_Clicked(object sender, EventArgs e)
-    {
-        await Shell.Current.Navigation.PopAsync();
+        private async void LoadDoctorDetailsAsync()
+        {
+            if (Guid.TryParse(_doctorId, out Guid doctorGuid))
+            {
+                var apiRepository = Application.Current.Handler.MauiContext.Services.GetService<DoctorApiRepository>();
+
+                try
+                {
+                    _doctor = await apiRepository.GetDoctorByIdAsync(doctorGuid);
+                    BindingContext = _doctor;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error loading doctor details: {ex.Message}");
+                }
+            }
+        }
+
+        private async void BackButton_Clicked(object sender, EventArgs e)
+        {
+            await Shell.Current.Navigation.PopAsync();
+        }
     }
 }

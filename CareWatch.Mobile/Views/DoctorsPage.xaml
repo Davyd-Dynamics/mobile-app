@@ -10,7 +10,7 @@
                   ItemTapped="doctorsList_ItemTapped">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding FullName}" Detail="{Binding Specialization}">
+                    <TextCell Text="{Binding Contact.FirstName}" Detail="{Binding Contact.LastName}">
                         <TextCell.ContextActions>
                             <MenuItem CommandParameter="{Binding .}" Text="Edit" Clicked="EditDoctorButton_Clicked"></MenuItem>
                             <MenuItem CommandParameter="{Binding .}" Text="Delete" Clicked="DeleteDoctorButton_Clicked"></MenuItem>

@@ -15,7 +15,7 @@ namespace CareWatch.Mobile.Models.Services
         new Patient
         {
             Id = Guid.NewGuid(),
-            Contact = new Contact
+            Contact = new Entities.Contact
             {
                 Id = Guid.NewGuid(),
                 FirstName = "John",
@@ -32,7 +32,7 @@ namespace CareWatch.Mobile.Models.Services
         new Patient
         {
             Id = Guid.NewGuid(),
-            Contact = new Contact
+            Contact = new Entities.Contact
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Jane",
@@ -49,7 +49,7 @@ namespace CareWatch.Mobile.Models.Services
         new Patient
         {
             Id = Guid.NewGuid(),
-            Contact = new Contact
+            Contact = new Entities.Contact
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Michael",
@@ -66,7 +66,7 @@ namespace CareWatch.Mobile.Models.Services
         new Patient
         {
             Id = Guid.NewGuid(),
-            Contact = new Contact
+            Contact = new Entities.Contact
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Emily",
@@ -83,7 +83,7 @@ namespace CareWatch.Mobile.Models.Services
         new Patient
         {
             Id = Guid.NewGuid(),
-            Contact = new Contact
+            Contact = new Entities.Contact
             {
                 Id = Guid.NewGuid(),
                 FirstName = "David",
@@ -124,7 +124,7 @@ namespace CareWatch.Mobile.Models.Services
                 return new Patient()
                 {
                     Id = patient.Id,
-                    Contact = new Contact()
+                    Contact = new Entities.Contact()
                     {
                         Id = patient.Contact.Id,
                         FirstName = patient.Contact.FirstName,

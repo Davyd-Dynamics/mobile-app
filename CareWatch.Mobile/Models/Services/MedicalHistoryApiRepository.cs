@@ -1,97 +1,84 @@
 ﻿using CareWatch.Mobile.Models.Entities;
 using CareWatch.Mobile.Models.Requests;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace CareWatch.Mobile.Models.Services
 {
-    public class PatientApiRepository
+    public class MedicalHistoryApiRepository
     {
-        private static List<Patient> patients;
+        private static List<MedicalHistory> medicalHistories; // Assuming MedicalHistory model exists
         private readonly string baseApiUrl = "http://10.0.2.2:5000";
         private readonly HttpClient httpClient;
-        JsonSerializerOptions _serializerOptions;
+        private readonly JsonSerializerSettings _serializerSettings;
 
-        public PatientApiRepository()
+        public MedicalHistoryApiRepository()
         {
             httpClient = new HttpClient();
-            _serializerOptions = new JsonSerializerOptions
+            _serializerSettings = new JsonSerializerSettings
             {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true
+                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
+                Formatting = Formatting.Indented
             };
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<IEnumerable<Patient>> GetAllPatientsAsync(SearchFilter searchFilter = null)
+        public async Task<IEnumerable<MedicalHistory>> GetAllMedicalHistoriesAsync()
         {
             try
             {
-                string apiUrl = $"{baseApiUrl}/api/v1/patients/";
-
-                if (searchFilter != null)
-                {
-                    // Serialize the search filter and append it to the URL
-                    var queryString = string.Join("&", searchFilter.GetType()
-                        .GetProperties()
-                        .Where(prop => prop.GetValue(searchFilter) != null)
-                        .Select(prop => $"{prop.Name}={Uri.EscapeDataString(prop.GetValue(searchFilter).ToString())}"));
-
-                    apiUrl += $"?{queryString}";
-                }
-
-                var uri = new Uri($"{baseApiUrl}/api/v1/patients");
+                var uri = new Uri($"{baseApiUrl}/api/v1/medical-histories");
                 var response = await httpClient.GetAsync(uri);
                 response.EnsureSuccessStatusCode();
 
                 var content = await response.Content.ReadAsStringAsync();
-                patients = JsonConvert.DeserializeObject<List<Patient>>(content);
-                return patients;
+                medicalHistories = JsonConvert.DeserializeObject<List<MedicalHistory>>(content);
+                return medicalHistories;
             }
             catch (Exception ex)
             {
-                // Handle the error
                 Console.WriteLine($"Error: {ex.Message}");
                 return null;
             }
         }
 
-        public async Task<Patient> GetPatientByIdAsync(Guid patientId)
-        {
-            //try
-            //{
-            //    var response = await httpClient.GetAsync($"{baseApiUrl}/api/v1/patients/{patientId}");
-            //    response.EnsureSuccessStatusCode();
-            //    var content = await response.Content.ReadAsStringAsync();
-            //    return JsonConvert.DeserializeObject<Patient>(content);
-            //}
-            //catch (Exception ex)
-            //{
-            //    // Обробити помилку
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //    return null;
-            //}
-            return patients.FirstOrDefault(p => p.Id == patientId);
-        }
-
-        public async Task<Patient> UpdatePatientAsync(Guid patientId, PatientRequest updatePatientRequestCommand)
+        public async Task<MedicalHistory> GetMedicalHistoryByIdAsync(Guid medicalHistoryId)
         {
             try
             {
-                var json = System.Text.Json.JsonSerializer.Serialize(updatePatientRequestCommand, _serializerOptions);
+                var response = await httpClient.GetAsync($"{baseApiUrl}/api/v1/medical-histories/{medicalHistoryId}");
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<MedicalHistory>(content);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<MedicalHistory> UpdateMedicalHistoryAsync(Guid medicalHistoryId, MedicalHistoryRequest updateMedicalHistoryRequest)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(updateMedicalHistoryRequest, _serializerSettings);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var uri = new Uri($"{baseApiUrl}/api/v1/patients/{patientId}");
+                var uri = new Uri($"{baseApiUrl}/api/v1/medical-histories/{medicalHistoryId}");
                 var response = await httpClient.PutAsync(uri, content);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var updatedPatientContent = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<Patient>(updatedPatientContent);
+                    var updatedMedicalHistoryContent = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<MedicalHistory>(updatedMedicalHistoryContent);
                 }
                 else if (response.StatusCode == HttpStatusCode.BadRequest)
                 {
@@ -103,8 +90,6 @@ namespace CareWatch.Mobile.Models.Services
                     {
                         Debug.WriteLine($"{error.Key}: {string.Join(", ", error.Value)}");
                     }
-
-                    // You may want to present these errors to the user in your UI
                 }
                 else
                 {
@@ -122,18 +107,18 @@ namespace CareWatch.Mobile.Models.Services
             }
         }
 
-        public async Task<Patient> CreatePatientAsync(PatientRequest createPatientCommand)
+        public async Task<MedicalHistory> CreateMedicalHistoryAsync(MedicalHistoryRequest createMedicalHistoryRequest)
         {
             try
             {
-                var json = System.Text.Json.JsonSerializer.Serialize(createPatientCommand, _serializerOptions);
+                var json = JsonConvert.SerializeObject(createMedicalHistoryRequest, _serializerSettings);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await httpClient.PostAsync($"{baseApiUrl}/api/v1/patients", content);
+                var response = await httpClient.PostAsync($"{baseApiUrl}/api/v1/medical-histories", content);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var createdPatientContent = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<Patient>(createdPatientContent);
+                    var createdMedicalHistoryContent = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<MedicalHistory>(createdMedicalHistoryContent);
                 }
                 else if (response.StatusCode == HttpStatusCode.BadRequest)
                 {
@@ -164,16 +149,16 @@ namespace CareWatch.Mobile.Models.Services
             }
         }
 
-        public async Task DeletePatientAsync(Guid patientId)
+        public async Task DeleteMedicalHistoryAsync(Guid medicalHistoryId)
         {
             try
             {
-                var response = await httpClient.DeleteAsync($"{baseApiUrl}/api/v1/patients/{patientId}");
+                var response = await httpClient.DeleteAsync($"{baseApiUrl}/api/v1/medical-histories/{medicalHistoryId}");
 
                 if (response.IsSuccessStatusCode)
                 {
-                    // Return the deleted patient if the deletion is successful
-                    var deletedPatientContent = await response.Content.ReadAsStringAsync();
+                    // Return success message or perform other actions if needed
+                    var deletedMedicalHistoryContent = await response.Content.ReadAsStringAsync();
                     return;
                 }
                 else if (response.StatusCode == HttpStatusCode.BadRequest)
@@ -194,13 +179,11 @@ namespace CareWatch.Mobile.Models.Services
                     // Handle other non-success status codes
                     Console.WriteLine($"Error: {response.StatusCode}");
                 }
-
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
             }
         }
-
     }
 }

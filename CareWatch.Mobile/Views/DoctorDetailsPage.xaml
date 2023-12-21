@@ -10,24 +10,24 @@
         <StackLayout Spacing="5">
             <Label Text="Name" FontSize="Medium" FontAttributes="Bold" />
             <StackLayout Orientation="Horizontal">
-                <Label Text="{Binding FirstName}" FontAttributes="Bold" />
-                <Label Text="{Binding LastName}" />
+                <Label Text="{Binding Contact.FirstName}" FontAttributes="Bold" />
+                <Label Text="{Binding Contact.LastName}" />
             </StackLayout>
         </StackLayout>
 
         <StackLayout Spacing="5">
             <Label Text="Email" FontSize="Medium" FontAttributes="Bold" />
-            <Label Text="{Binding Email}" />
+            <Label Text="{Binding Contact.Email}" />
         </StackLayout>
 
         <StackLayout Spacing="5">
             <Label Text="Address" FontSize="Medium" FontAttributes="Bold" />
-            <Label Text="{Binding Address}" />
+            <Label Text="{Binding Contact.Address}" />
         </StackLayout>
 
         <StackLayout Spacing="5">
             <Label Text="Phone" FontSize="Medium" FontAttributes="Bold" />
-            <Label Text="{Binding Phone}" />
+            <Label Text="{Binding Contact.Phone}" />
         </StackLayout>
 
         <Button Text="Back" Clicked="BackButton_Clicked" HorizontalOptions="Start" BackgroundColor="Transparent" TextColor="Blue" />

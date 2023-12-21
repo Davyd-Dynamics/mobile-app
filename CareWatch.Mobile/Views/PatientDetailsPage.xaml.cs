@@ -1,5 +1,6 @@
 using CareWatch.Mobile.Models;
 using CareWatch.Mobile.Models.Entities;
+using CareWatch.Mobile.Models.Services;
 
 namespace CareWatch.Mobile.Views;
 
@@ -19,7 +20,7 @@ public partial class PatientDetailsPage : ContentPage
         {
             if (Guid.TryParse(value, out Guid patientGuid))
             {
-                var apiRepository = new PatientApiRepository();
+                var apiRepository = Application.Current.Handler.MauiContext.Services.GetService<PatientApiRepository>();
                 _patient = apiRepository.GetPatientByIdAsync(patientGuid).Result;
                 BindingContext = _patient;
             }

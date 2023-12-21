@@ -46,7 +46,7 @@ public partial class DoctorsPage : ContentPage
         var menuItem = sender as MenuItem;
         var doctor = menuItem.BindingContext as Doctor;
 
-        bool userConfirmation = await DisplayAlert("Confirm Deletion", $"Are you sure you want to delete Dr. {doctor.FullName}?", "Yes", "No");
+        bool userConfirmation = await DisplayAlert("Confirm Deletion", $"Are you sure you want to delete Dr. {doctor.Contact.FirstName} {doctor.Contact.LastName}?", "Yes", "No");
 
         if (userConfirmation)
         {

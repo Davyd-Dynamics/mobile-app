@@ -5,26 +5,26 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:CareWatch.Mobile"
     xmlns:views="clr-namespace:CareWatch.Mobile.Views"
-    Shell.FlyoutBehavior="Disabled"
-    Title="CareWatch.Mobile">
+    >
 
-    <ShellContent
-        Title="Patients"
-        ContentTemplate="{DataTemplate views:PatientsPage}"
-        Route="PatientsPage" />
-
-    <ShellContent
-    Title="Patient Details"
-    ContentTemplate="{DataTemplate views:PatientDetailsPage}"
-    Route="PatientDetailsPage" />
-
-    <ShellContent
-    Title="Edit Patient"
-    ContentTemplate="{DataTemplate views:EditPatientPage}"
-    Route="EditPatientPage" />
-
-    <ShellContent
-Title="Add Patient"
-ContentTemplate="{DataTemplate views:AddPatientPage}"
-Route="AddPatientPage" />
+    <TabBar>
+        <Tab Title="Patients">
+            <ShellContent
+                ContentTemplate="{DataTemplate views:PatientsPage}"
+                Icon="personalinjury.svg"
+                Route="PatientsPage" />
+        </Tab>
+        <Tab Title="Doctors">
+            <ShellContent
+        ContentTemplate="{DataTemplate views:DoctorsPage}"
+        Icon="doctor.svg"
+        Route="DoctorsPage" />
+        </Tab>
+        <Tab Title="MedicalHistoriesPage">
+            <ShellContent
+            ContentTemplate="{DataTemplate views:MedicalHistoriesPage}"
+            Route="MedicalHistoriesPage" />
+        </Tab>
+    </TabBar>
+    
 </Shell>

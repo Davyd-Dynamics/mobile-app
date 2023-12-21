@@ -16,6 +16,8 @@ namespace CareWatch.Mobile
             }).UseMauiCommunityToolkit();
 
             builder.Services.AddSingleton<PatientApiRepository>();
+            builder.Services.AddSingleton<MedicalHistoryApiRepository>();
+            builder.Services.AddSingleton<DoctorApiRepository>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

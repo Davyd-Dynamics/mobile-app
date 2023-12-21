@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CareWatch.Mobile.Models.Requests
 {
-    public class SearchFIlter
+    public class SearchFilter
     {
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set;} = 10;
