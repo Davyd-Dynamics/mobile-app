@@ -7,28 +7,10 @@
     xmlns:views="clr-namespace:CareWatch.Mobile.Views"
     >
 
-    <TabBar>
-        <Tab Title="Patients">
-            <ShellContent
-                ContentTemplate="{DataTemplate views:PatientsPage}"
-                Icon="personalinjury.svg"
-                Route="PatientsPage" />
-        </Tab>
-        <Tab Title="Doctors">
-            <ShellContent
-                ContentTemplate="{DataTemplate views:DoctorsPage}"
-                Icon="doctor.svg"
-                Route="DoctorsPage" />
-        </Tab>
-        <Tab Title="MedicalHistoriesPage">
-            <ShellContent
-                ContentTemplate="{DataTemplate views:MedicalHistoriesPage}"
-                Route="MedicalHistoriesPage" />
-        </Tab>
-        <Tab Title="Emergency Request Page">
-            <ShellContent
-                ContentTemplate="{DataTemplate views:EmergencyRequestsPage}"
-                Route="EmergencyRequestsPage" />
-        </Tab>
-    </TabBar>
+    <FlyoutItem Title="Main">
+        <ShellContent ContentTemplate="{DataTemplate views:PatientsPage}" Icon="personalinjury.svg" Route="PatientsPage" />
+        <ShellContent ContentTemplate="{DataTemplate views:DoctorsPage}" Icon="doctor.svg" Route="DoctorsPage" />
+        <ShellContent ContentTemplate="{DataTemplate views:MedicalHistoriesPage}" Icon="medicalhistory.svg" Route="MedicalHistoriesPage" />
+        <ShellContent ContentTemplate="{DataTemplate views:EmergencyRequestsPage}" Icon="emergency.svg" Route="EmergencyRequestsPage" />
+    </FlyoutItem>
 </Shell>

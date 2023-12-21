@@ -30,17 +30,5 @@ namespace CareWatch.Mobile
             Routing.RegisterRoute(nameof(EmergencyRequestDetailsPage), typeof(EmergencyRequestDetailsPage));
             Routing.RegisterRoute(nameof(AddEmergencyRequestPage), typeof(AddEmergencyRequestPage));
         }
-
-        //protected override async void OnNavigating(ShellNavigatingEventArgs args)
-        //{
-        //    base.OnNavigating(args);
-
-        //    var apiRepository = Application.Current.Handler.MauiContext.Services.GetService<AuthApiRepository>();
-        //    if (!await apiRepository.IsAuthenticatedAsync() && args.Source == ShellNavigationSource.Pop)
-        //    {
-        //        args.Cancel();
-        //        await GoToAsync(nameof(LoginPage));
-        //    }
-        //}
     }
 }
