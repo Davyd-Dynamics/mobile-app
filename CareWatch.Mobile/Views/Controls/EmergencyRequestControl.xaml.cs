@@ -1,5 +1,3 @@
-using static Android.Renderscripts.FileA3D;
-
 namespace CareWatch.Mobile.Views.Controls;
 
     public partial class EmergencyRequestControl : ContentView
@@ -27,17 +25,11 @@ namespace CareWatch.Mobile.Views.Controls;
             set => entryStatus.Text = value;
         }
 
-        public DateTime DateCreated
-        {
-            get => datePickerDateCreated.Date;
-            set => datePickerDateCreated.Date = value;
-        }
-
-        public string AssignedDoctor
-        {
-            get => pickerAssignedDoctor.SelectedItem?.ToString();
-            set => pickerAssignedDoctor.SelectedItem = value;
-        }
+        //public string AssignedDoctor
+        //{
+        //    get => pickerAssignedDoctor.SelectedItem?.ToString();
+        //    set => pickerAssignedDoctor.SelectedItem = value;
+        //}
 
         public event EventHandler SaveButtonClicked;
 

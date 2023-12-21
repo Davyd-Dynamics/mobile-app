@@ -22,9 +22,8 @@ public partial class AddEmergencyRequestPage : ContentPage
             Type = emergencyRequestCtrl.Type,
             Location = emergencyRequestCtrl.Location,
             Status = emergencyRequestCtrl.Status,
-            DateCreated = emergencyRequestCtrl.DateCreated.ToUniversalTime(),
             // Set the appropriate doctor ID based on the selected doctor
-            AssignedDoctorId = Guid.Parse(emergencyRequestCtrl.AssignedDoctor)
+            //AssignedDoctorId = Guid.Parse(emergencyRequestCtrl.AssignedDoctor)
         };
 
         var apiRepository = Application.Current.Handler.MauiContext.Services.GetService<EmergencyRequestApiRepository>();

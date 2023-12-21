@@ -1,4 +1,5 @@
 ﻿using CareWatch.Mobile.Models.Entities;
+using CareWatch.Mobile.Models.Requests;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -64,7 +65,7 @@ namespace CareWatch.Mobile.Models.Services
             }
         }
 
-        public async Task<EmergencyRequest> CreateEmergencyRequestAsync(EmergencyRequest createEmergencyRequestCommand)
+        public async Task<EmergencyRequest> CreateEmergencyRequestAsync(EmergencyRequestRequest createEmergencyRequestCommand)
         {
             try
             {

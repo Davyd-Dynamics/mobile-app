@@ -19,6 +19,8 @@ namespace CareWatch.Mobile
             builder.Services.AddSingleton<MedicalHistoryApiRepository>();
             builder.Services.AddSingleton<DoctorApiRepository>();
             builder.Services.AddSingleton<EmergencyRequestApiRepository>();
+            builder.Services.AddSingleton<AuthApiRepository>();
+            
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

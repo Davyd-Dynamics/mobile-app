@@ -1,4 +1,6 @@
-﻿namespace CareWatch.Mobile
+﻿using CareWatch.Mobile.Views;
+
+namespace CareWatch.Mobile
 {
     public partial class App : Application
     {
@@ -6,7 +8,7 @@
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            MainPage = new NavigationPage(new LoginPage());
         }
     }
 }

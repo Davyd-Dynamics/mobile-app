@@ -16,20 +16,19 @@
         </Tab>
         <Tab Title="Doctors">
             <ShellContent
-        ContentTemplate="{DataTemplate views:DoctorsPage}"
-        Icon="doctor.svg"
-        Route="DoctorsPage" />
+                ContentTemplate="{DataTemplate views:DoctorsPage}"
+                Icon="doctor.svg"
+                Route="DoctorsPage" />
         </Tab>
         <Tab Title="MedicalHistoriesPage">
             <ShellContent
-            ContentTemplate="{DataTemplate views:MedicalHistoriesPage}"
-            Route="MedicalHistoriesPage" />
+                ContentTemplate="{DataTemplate views:MedicalHistoriesPage}"
+                Route="MedicalHistoriesPage" />
         </Tab>
         <Tab Title="Emergency Request Page">
             <ShellContent
-            ContentTemplate="{DataTemplate views:EmergencyRequestsPage}"
-            Route="EmergencyRequestsPage" />
+                ContentTemplate="{DataTemplate views:EmergencyRequestsPage}"
+                Route="EmergencyRequestsPage" />
         </Tab>
     </TabBar>
-    
 </Shell>
