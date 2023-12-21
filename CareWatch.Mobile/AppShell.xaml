@@ -25,6 +25,11 @@
             ContentTemplate="{DataTemplate views:MedicalHistoriesPage}"
             Route="MedicalHistoriesPage" />
         </Tab>
+        <Tab Title="Emergency Request Page">
+            <ShellContent
+            ContentTemplate="{DataTemplate views:EmergencyRequestsPage}"
+            Route="EmergencyRequestsPage" />
+        </Tab>
     </TabBar>
     
 </Shell>
